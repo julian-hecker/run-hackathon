@@ -1,0 +1,24 @@
+[project]
+name = "run-hackathon"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "voice-api",
+    "agent-core"
+]
+
+[tool.poe.tasks]
+adk-web = "adk web ./libs/agent-core/src/agent_core/agents --port 8080"
+build-voice = "docker build -t voice-api -f apps/voice-api/Dockerfile ."
+
+[tool.uv.sources]
+agent-core = { workspace = true }
+voice-api = { workspace = true }
+
+[tool.uv.workspace]
+members = [
+    "apps/*",
+    "libs/*",
+]
