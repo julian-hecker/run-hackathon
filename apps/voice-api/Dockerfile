@@ -31,8 +31,8 @@ ARG PACKAGE_NAME
 
 COPY --from=builder /app /app
 
-WORKDIR /app/apps/${PACKAGE_NAME}
+WORKDIR /app
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-CMD ["python", "main.py"]
+CMD ["python", "-m", "voice_api.main"]

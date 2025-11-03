@@ -9,9 +9,16 @@ dependencies = [
     "agent-core"
 ]
 
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "pytest-asyncio>=0.23.0",
+]
+
 [tool.poe.tasks]
 adk-web = "adk web ./libs/agent-core/src/agent_core/agents --port 8080"
 build-voice = "docker build -t voice-api -f apps/voice-api/Dockerfile ."
+test = "pytest"
 
 [tool.uv.sources]
 agent-core = { workspace = true }

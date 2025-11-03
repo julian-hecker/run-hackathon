@@ -8,3 +8,10 @@ dependencies = [
     "fastapi[standard]>=0.120.4",
     "twilio>=9.8.5",
 ]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatchling.build]
+packages = ["src/voice_api"]
