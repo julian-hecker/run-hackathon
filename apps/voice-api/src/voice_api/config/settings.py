@@ -1,5 +1,5 @@
 from typing import Literal
-from pydantic import Field
+from pydantic import Field, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 base_model_config = SettingsConfigDict(
@@ -29,6 +29,12 @@ class Settings(BaseSettings):
     app_environment: Literal["LOCAL", "PROD"] = Field(
         default="PROD", description="PROD or LOCAL"
     )
+
+    @computed_field
+    @property
+    def is_local(self) -> bool:
+        return self.app_environment == "LOCAL"
+
     twilio: TwilioSettings = Field(default_factory=TwilioSettings)
 
 
