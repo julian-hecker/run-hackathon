@@ -2531,13 +2531,17 @@ version = "0.1.0"
 source = { editable = "apps/voice-api" }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
+    { name = "pydantic-settings" },
     { name = "twilio" },
+    { name = "uvicorn" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.120.4" },
+    { name = "pydantic-settings", specifier = ">=2.11.0" },
     { name = "twilio", specifier = ">=9.8.5" },
+    { name = "uvicorn", specifier = ">=0.38.0" },
 ]
 
 [[package]]

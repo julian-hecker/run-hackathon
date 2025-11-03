@@ -18,7 +18,9 @@ dev = [
 
 [tool.poe.tasks]
 adk-web = "adk web ./libs/agent-core/src/agent_core/agents --port 8080"
-build-voice = "docker build -t voice-api -f apps/voice-api/Dockerfile ."
+api-build = "docker build -t voice-api -f apps/voice-api/Dockerfile ."
+api-dev = "uvicorn voice_api.main:app --reload --host 0.0.0.0 --port 8000"
+api-run = "uvicorn voice_api.main:app --host 0.0.0.0 --port 8000"
 test = "pytest"
 
 [tool.uv.sources]

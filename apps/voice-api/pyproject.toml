@@ -6,7 +6,9 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]>=0.120.4",
+    "pydantic-settings>=2.11.0",
     "twilio>=9.8.5",
+    "uvicorn>=0.38.0",
 ]
 
 [build-system]
