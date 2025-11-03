@@ -27,11 +27,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 FROM python:${PYTHON_VERSION}-slim AS runner
 
-ARG PACKAGE_NAME
-
 COPY --from=builder /app /app
-
-WORKDIR /app
 
 ENV PATH="/app/.venv/bin:$PATH"
 
