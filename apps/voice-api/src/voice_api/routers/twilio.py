@@ -8,6 +8,7 @@ from fastapi.params import Depends
 from fastapi.responses import HTMLResponse
 from twilio.twiml.voice_response import Connect, Stream, VoiceResponse
 
+from agent_core.agents import voice_agent
 from agent_core.runtime.live_messaging import (
     AgentEvent,
     agent_to_client_messaging,
@@ -91,10 +92,12 @@ async def twilio_websocket(ws: WebSocket):
     # to_phone = start_event["start"]["customParameters"]["to_phone"]
     stream_sid = start_event["streamSid"]
 
-    live_events, live_request_queue = await start_agent_session(from_phone, call_sid)
+    live_events, live_request_queue = await start_agent_session(
+        voice_agent, from_phone, call_sid
+    )
 
     initial_message = text_to_content(
-        "You're a customer service chatbot. Introduce yourself.", "user"
+        "Introduce yourself and ask the user how you can help them.", "user"
     )
     live_request_queue.send_content(initial_message)
 
