@@ -31,4 +31,6 @@ COPY --from=builder /app /app
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-CMD ["python", "-m", "voice_api.main"]
+EXPOSE 8000
+
+CMD ["uvicorn", "voice_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
