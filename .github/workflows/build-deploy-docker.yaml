@@ -26,6 +26,7 @@ jobs:
 
     # https://cloud.google.com/blog/products/identity-security/secure-your-use-of-third-party-tools-with-identity-federation
     - uses: 'google-github-actions/auth@v3'
+      id: auth
       with:
         token_format: 'access_token'
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
