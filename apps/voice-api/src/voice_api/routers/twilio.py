@@ -25,7 +25,6 @@ from voice_api.utils.audio import (
     adk_pcm24k_to_twilio_ulaw8k,
     twilio_ulaw8k_to_adk_pcm16k,
 )
-from voice_api.config.settings import settings
 from voice_api.utils.twilio_security import validate_twilio
 
 logger = logging.getLogger(__name__)
@@ -33,16 +32,16 @@ logger = logging.getLogger(__name__)
 twilio_path = "/twilio"
 callback_path = "/callback"
 stream_path = "/stream"
-router = APIRouter(prefix=twilio_path, tags=["Twilio Webhooks"])
+twilio_router = APIRouter(prefix=twilio_path, tags=["Twilio Webhooks"])
 
 
-@router.post("/connect", dependencies=[Depends(validate_twilio)])
+@twilio_router.post("/connect", dependencies=[Depends(validate_twilio)])
 def create_call(req: Request, payload: Annotated[TwilioVoiceWebhookPayload, Form()]):
     """Generate TwiML to connect a call to a Twilio Media Stream"""
 
     host = req.url.hostname
-    ws_protocol = "ws" if settings.is_local else "wss"
-    http_protocol = "http" if settings.is_local else "https"
+    ws_protocol = "wss"
+    http_protocol = "https"
     ws_url = f"{ws_protocol}://{host}{twilio_path}{stream_path}"
     callback_url = f"{http_protocol}://{host}{twilio_path}{callback_path}"
 
@@ -59,7 +58,9 @@ def create_call(req: Request, payload: Annotated[TwilioVoiceWebhookPayload, Form
     return HTMLResponse(content=str(response), media_type="application/xml")
 
 
-@router.post(callback_path, status_code=204, dependencies=[Depends(validate_twilio)])
+@twilio_router.post(
+    callback_path, status_code=204, dependencies=[Depends(validate_twilio)]
+)
 def twilio_callback(payload: Annotated[TwilioStreamCallbackPayload, Form()]):
     """Handle Twilio status callbacks"""
 
@@ -73,7 +74,7 @@ def twilio_callback(payload: Annotated[TwilioStreamCallbackPayload, Form()]):
 # Headers({'host': 'amazing-sincere-grouse.ngrok-free.app', 'user-agent': 'Twilio.TmeWs/1.0', 'connection': 'Upgrade', 'sec-websocket-key': '', 'sec-websocket-version': '13', 'upgrade': 'websocket', 'x-forwarded-for': '98.84.178.199', 'x-forwarded-host': 'amazing-sincere-grouse.ngrok-free.app', 'x-forwarded-proto': 'https', 'x-twilio-signature': '', 'accept-encoding': 'gzip'})
 
 
-@router.websocket(stream_path)
+@twilio_router.websocket(stream_path)
 async def twilio_websocket(ws: WebSocket):
     """Handle Twilio Media Stream WebSocket connection"""
 

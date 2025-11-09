@@ -21,7 +21,7 @@ def _mount_twilio_router_with_fakes(is_local: bool = True):
     app = FastAPI()
     # Override the dependency used in route decorators to bypass signature checks
     app.dependency_overrides[sec.validate_twilio] = _noop_validate
-    app.include_router(tw.router)
+    app.include_router(tw.twilio_router)
     return app, tw
 
 

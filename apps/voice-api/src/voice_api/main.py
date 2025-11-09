@@ -7,7 +7,7 @@ from fastapi import FastAPI
 # from fastapi.middleware.gzip import GZipMiddleware
 # from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 
-from voice_api.routers import health_router
+from voice_api.routers import health_router, twilio_router
 
 
 @asynccontextmanager
@@ -25,11 +25,7 @@ app = FastAPI(
 # app.add_middleware(CORSMiddleware)
 
 app.include_router(health_router)
-
-
-@app.get("/")
-async def root():
-    return {"status": "ok"}
+app.include_router(twilio_router)
 
 
 if __name__ == "__main__":
