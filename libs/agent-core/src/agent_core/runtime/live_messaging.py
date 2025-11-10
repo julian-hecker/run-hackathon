@@ -154,7 +154,7 @@ async def agent_to_client_messaging(
             continue
 
         if not event.content or not event.content.parts:
-            print("Agent sent empty content", event)
+            # print("Agent sent empty content", event)
             continue
 
         for part in event.content.parts:
@@ -179,7 +179,8 @@ async def agent_to_client_messaging(
                 continue
 
             else:
-                print("Unknown event content part", event)
+                # print("Unknown event content part", event)
+                continue
 
 
 def send_pcm_to_agent(pcm_audio: bytes, live_request_queue: LiveRequestQueue):

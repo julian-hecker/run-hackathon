@@ -1,6 +1,5 @@
 import asyncio
 import base64
-import logging
 from typing import Annotated
 
 from fastapi import APIRouter, Form, Request, Response, WebSocket, WebSocketDisconnect
@@ -26,8 +25,7 @@ from voice_api.utils.audio import (
     twilio_ulaw8k_to_adk_pcm16k,
 )
 from voice_api.utils.twilio_security import validate_twilio
-
-logger = logging.getLogger(__name__)
+from voice_api.utils.logging import logger
 
 twilio_path = "/twilio"
 callback_path = "/callback"
